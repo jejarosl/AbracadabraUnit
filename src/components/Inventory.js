@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Inventory = () => {
   const params = useParams();
@@ -70,30 +71,33 @@ const Inventory = () => {
                     Create Inventory
                 </button>
             </div>
-            <table className='table table-hover table-bordered table-collapse'>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>typInventury</th>
-                        <th>datKonec</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    {inventory.map((item,index) => 
-                        <tr>
-                            <td>{index+1}</td>
-                            <td>{item.typInventury}</td>
-                            <td>{item.datKonec}</td>
-                            <td>
-                                <button className='btn btn-primary btn-sm bg-prim border-0'>
-                                    Open Inventory
-                                </button>
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+            <div className='row'>
+            {inventory.map((item,index) => 
+                <div className='col-md-3 mt-4'>
+                    <div className='card'>
+                        <div className='card-content'>
+                            <div className='card-body'>
+                                <h6>
+                                    typInventury:
+                                </h6>
+                                <span>{item.typInventury}</span>
+                                <h6>
+                                    datKonec:
+                                </h6>
+                                <span>{item.datKonec}</span>
+                            </div>
+                            <div className='card-footer'>
+                                  <Link to={`/inventories/products/${item.id}?warehouseId=${item.sklad}`}>
+                                    <button className='btn btn-primary btn-sm bg-prim border-0'>
+                                        View Inventory Products
+                                    </button>  
+                                  </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            </div>
         </div>
 
         <div className="modal fade" id="inventoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -30,34 +30,33 @@ const Statistics = () => {
             <h3>
                 Warehouses
             </h3>
-            <table className='table table-hover table-bordered table-collapse'>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Kod</th>
-                        <th>Nazev</th>
-    
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    {warehouse.map((item,index) => 
-                        <tr>
-                            <td>{index+1}</td>
-                            <td>{item.kod}</td>
-                            <td>{item.nazev}</td>
-                            <td>
+            <div className='row'>
+            {warehouse.map((item,index) => 
+                <div className='col-md-3 mt-4'>
+                    <div className='card'>
+                        <div className='card-content'>
+                            <div className='card-body'>
+                                <h6>
+                                    Kod:
+                                </h6>
+                                <span>{item.kod}</span>
+                                <h6>
+                                    Nazev:
+                                </h6>
+                                <span>{item.nazev}</span>
+                            </div>
+                            <div className='card-footer'>
                                 <Link to={`inventories/${item.kod}`}>
                                   <button className='btn btn-primary btn-sm bg-prim border-0'>
                                     View Inventories
-                                </button>  
+                                    </button>  
                                 </Link>
-                                
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            </div>
         </div>
     </div>
   )
