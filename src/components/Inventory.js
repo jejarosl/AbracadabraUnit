@@ -10,20 +10,48 @@ const Inventory = () => {
   const Token = btoa("admin6:admin6admin6");
 
   const [inventory, setInventory] = useState([]);
-  const [type, setType] = useState([]);
+  const [type, setType] = useState("");
+
 
   let config = {
     headers: {
-      Authorization: `Basic ${Token}`,
-      Accept: "application/json",
+      "Authorization": `Basic ${Token}`,
+      "Accept": "application/json",
+      "Content-Type":"application/json"
     }
   }
+
+  const addInventory = () => {
+    let date = new Date().toISOString().substring(0,10);
+    let data = {
+        winstrom:{
+            inventura: [
+                {
+                    typInventury: type,
+                    datZahaj: date,
+                    sklad: `code:${params.kod}`,
+                    stavK: "stavInventury.zahajena"
+                },
+            ]
+        }
+    }
+    let jsonPayload = JSON.stringify(data);
+
+    axios.post(`${URL}/${COMPANY}/inventura/`, jsonPayload, config
+    )
+    .then((res) => {
+        console.log(res.data);
+    })
+    .catch((error) => {
+        console.log(error)
+    });
+
+  };
 
   useEffect(()=> {
     axios.get(`${URL}/${COMPANY}/inventura/(sklad="code:${params.kod}")?detail=full`,config
     )
     .then((res) => {
-        console.log(res.data.winstrom.inventura);
         setInventory(res.data.winstrom.inventura);
     })
     .catch((error) => {
@@ -80,14 +108,14 @@ const Inventory = () => {
                 <div className="modal-body">
                 <form>
                     <div className="form-group">
-                        <label for="exampleInputEmail1" value={type} onChange={(e) => setType(e.target.value)}>Typ Inventury</label>
-                        <input type="email" className="form-control" />
+                        <label >Typ Inventury</label>
+                        <input type="text" className="form-control" value={type} onChange={(e) => setType(e.target.value)}/>
                     </div>
                 </form>
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" className="btn btn-primary">Přidat</button>
+                    <button type="button" className="btn btn-primary" onClick={addInventory}>Přidat</button>
                 </div>
                 </div>
             </div>
